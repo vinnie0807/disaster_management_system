@@ -1,12 +1,12 @@
 const Disaster = require('../models/DisasterModel');
-const { getIO } = require('../socket'); // Import Socket.io instance
+const { getIO } = require('../socket'); 
 
 const reportDisaster = async (req, res) => {
   try {
     const newDisaster = new Disaster(req.body);
     await newDisaster.save();
 
-    // Emit real-time update to all connected clients
+    
     const io = getIO();
     io.emit('updateDisasters', newDisaster);
 
@@ -32,7 +32,7 @@ const deleteDisaster = async (req, res) => {
     const { id } = req.params;
     await Disaster.findByIdAndDelete(id);
 
-    // Emit updated data to all clients
+  
     const io = getIO();
     io.emit('disasterDeleted', id);
 
